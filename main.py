@@ -2,6 +2,8 @@ import time
 
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
+import re
 
 SDAROT_URL = "https://www.sdarot.tw/watch/8249-%D7%90%D7%99%D7%A0%D7%A4%D7%99%D7%A0%D7%99%D7%98%D7%99-infiniti/season/1/episode/14"
 DNS_URL = "chrome://settings/security?search=dns"
@@ -11,7 +13,10 @@ driver.get(DNS_URL)
 driver.maximize_window()
 #driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 driver.execute_script("window.scrollTo(0, 500)")
-
+driver.implicitly_wait(2)
+time.sleep(1)
+link = driver.find_element_by_link_text("Custom")
+link.click()
 done = False
 
 
