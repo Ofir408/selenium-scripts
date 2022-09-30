@@ -11,6 +11,10 @@ done = False
 
 while not done:
     html_source = driver.page_source
+    if "סדרות" not in html_source:
+        print("Selenium didnt get reach the correct page. exit!")
+        exit(-1)
+
     if "Not Available" in html_source:
         print('Not Available this time, f5 + sleeping 30 seconds.')
         driver.get(URL)  # refresh
