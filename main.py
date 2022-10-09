@@ -1,41 +1,53 @@
 import time
-
+import smtplib
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from email.mime.multipart import MIMEMultipart
 
-SDAROT_URL = "https://www.sdarot.tw/watch/8249-%D7%90%D7%99%D7%A0%D7%A4%D7%99%D7%A0%D7%99%D7%98%D7%99-infiniti/season/1/episode/14"
-DNS_URL = "chrome://settings/security?search=dns"
+EPISODE_REQEST = 'Enter episode number: '
+episode_input = input(EPISODE_REQEST)
+SDAROT_URL = "https://www.sdarot.tw/watch/8249-%D7%90%D7%99%D7%A0%D7%A4%D7%99%D7%A0%D7%99%D7%98%D7%99-infiniti/season/1/episode/"+ episode_input
+receiver_address = input('Enter mail address: ')
+MAIL_CONTENT = "Enjoy! the episode is ready for you :)"
+SENDER_Address = "cohen.alon213@gmail.com"
+SENDER_PASS = "qgybdizygidotuhn"
+SDAROT_USER = "loli213"
+SDAROT_PASS = "loli213"
+
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
-driver.get(DNS_URL)
+driver.get(SDAROT_URL)
 driver.maximize_window()
-#driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-#driver.execute_script("window.scrollTo(0, 500)")
-
 driver.execute_script("alert('set dns to CleanBrowsing (Family Filter)');")
 time.sleep(15)
-
-driver.execute_script("window.scrollTo(0, 500)")
-driver.implicitly_wait(2)
-time.sleep(1)
-#link = driver.find_element_by_link_text("Custom")
-#link.click()
 done = False
 
-driver.get(SDAROT_URL)
 
 while "ברוך שובך" not in driver.page_source:
     print('waiting to ברוך שובך...')
-    time.sleep(5)
+    time.sleep(10)
 
 while not done:
-    time.sleep(36)
-    html_source = driver.page_source
-    if "כל שרתי הצפייה שלנו עמוסים" in html_source:
-        print('Not Available this time, f5 + sleeping 30 seconds.')
-        driver.get(SDAROT_URL)  # refresh
+   time.sleep(36)
+   html_source = driver.page_source
+   if "כל שרתי הצפייה שלנו עמוסים" in html_source:
+       print('Not Available this time, f5 + sleeping 30 seconds.')
+       driver.get(SDAROT_URL)  # refresh
 
-    elif "נגן את הפרק" in html_source:
-        print('found!!')
-        done = True
-        time.sleep(60 * 3 * 60)  # you can watch the for 3 hours.
+   elif "נגן את הפרק" in html_source:
+      print('found!!')
+      done = True
+
+message = MIMEMultipart()
+message['From'] = SENDER_Address
+message['To'] = receiver_address
+message['Subject'] = MAIL_CONTENT
+
+session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
+session.starttls() #enable security
+session.login(SENDER_Address, SENDER_PASS) #login with mail_id and password
+text = message.as_string()
+session.sendmail(SENDER_Address, receiver_address, text)
+session.quit()
+
+time.sleep(60 * 3 * 60)  # you can watch the for 3 hours.
