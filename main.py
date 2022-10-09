@@ -5,9 +5,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from email.mime.multipart import MIMEMultipart
 
 EPISODE_REQEST = 'Enter episode number: '
-episode_input = input(EPISODE_REQEST)
-SDAROT_URL = "https://www.sdarot.tw/watch/8249-%D7%90%D7%99%D7%A0%D7%A4%D7%99%D7%A0%D7%99%D7%98%D7%99-infiniti/season/1/episode/"+ episode_input
-receiver_address = input('Enter mail address: ')
+EPISODE_INPUT = input(EPISODE_REQEST)
+SDAROT_URL = "https://www.sdarot.tw/watch/8249-%D7%90%D7%99%D7%A0%D7%A4%D7%99%D7%A0%D7%99%D7%98%D7%99-infiniti/season/1/episode/"+ EPISODE_INPUT
+RECEIVER_ADDRESS = input('Enter mail address: ')
 MAIL_CONTENT = "Enjoy! the episode is ready for you :)"
 SENDER_Address = "cohen.alon213@gmail.com"
 SENDER_PASS = "qgybdizygidotuhn"
@@ -40,14 +40,14 @@ while not done:
 
 message = MIMEMultipart()
 message['From'] = SENDER_Address
-message['To'] = receiver_address
+message['To'] = RECEIVER_ADDRESS
 message['Subject'] = MAIL_CONTENT
 
 session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
 session.starttls() #enable security
 session.login(SENDER_Address, SENDER_PASS) #login with mail_id and password
 text = message.as_string()
-session.sendmail(SENDER_Address, receiver_address, text)
+session.sendmail(SENDER_Address, RECEIVER_ADDRESS, text)
 session.quit()
 
 time.sleep(60 * 3 * 60)  # you can watch the for 3 hours.
