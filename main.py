@@ -1,6 +1,7 @@
 import time
 import smtplib
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from email.mime.multipart import MIMEMultipart
 
@@ -13,15 +14,29 @@ SENDER_Address = "cohen.alon213@gmail.com"
 SENDER_PASS = "qgybdizygidotuhn"
 SDAROT_USER = "loli213"
 SDAROT_PASS = "loli213"
+LOGIN_XPATH = '//*[@id="slideText"]/p/button'
+USER_XPATH = '//*[@id="loginForm"]/form/div[1]/div/input'
+PASS_XPATH = '//*[@id="loginForm"]/form/div[2]/div/input'
+LOGIN_BUTTON_XPATH = '//*[@id="loginForm"]/form/div[4]/button'
 
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
 driver.get(SDAROT_URL)
 driver.maximize_window()
-driver.execute_script("alert('set dns to CleanBrowsing (Family Filter)');")
-time.sleep(15)
-done = False
+#driver.execute_script("alert('set dns to CleanBrowsing (Family Filter)');")
+#time.sleep(10)
 
+login = driver.find_element(By.XPATH, LOGIN_XPATH)
+time.sleep(1)
+login.click()
+driver.find_element(By.XPATH, USER_XPATH).send_keys(SDAROT_USER)
+driver.find_element(By.XPATH, PASS_XPATH).send_keys(SDAROT_PASS)
+time.sleep(1)
+login_button = driver.find_element(By.XPATH, LOGIN_BUTTON_XPATH)
+time.sleep(1)
+login_button.click()
+
+done = False
 
 while "ברוך שובך" not in driver.page_source:
     print('waiting to ברוך שובך...')
