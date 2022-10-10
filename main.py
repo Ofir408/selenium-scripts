@@ -31,7 +31,6 @@ login.click()
 driver.find_element(By.XPATH, USER_XPATH).send_keys(SDAROT_USER)
 driver.find_element(By.XPATH, PASSWORD_XPATH).send_keys(SDAROT_PASS)
 login_button = driver.find_element(By.XPATH, LOGIN_BUTTON_XPATH)
-time.sleep(1)
 login_button.click()
 time.sleep(15)
 done = False
