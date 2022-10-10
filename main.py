@@ -16,7 +16,7 @@ SDAROT_USER = "loli213"
 SDAROT_PASS = "loli213"
 LOGIN_XPATH = '//*[@id="slideText"]/p/button'
 USER_XPATH = '//*[@id="loginForm"]/form/div[1]/div/input'
-PASS_XPATH = '//*[@id="loginForm"]/form/div[2]/div/input'
+PASSWORD_XPATH = '//*[@id="loginForm"]/form/div[2]/div/input'
 LOGIN_BUTTON_XPATH = '//*[@id="loginForm"]/form/div[4]/button'
 
 
@@ -27,20 +27,14 @@ driver.maximize_window()
 #time.sleep(10)
 
 login = driver.find_element(By.XPATH, LOGIN_XPATH)
-time.sleep(1)
 login.click()
 driver.find_element(By.XPATH, USER_XPATH).send_keys(SDAROT_USER)
-driver.find_element(By.XPATH, PASS_XPATH).send_keys(SDAROT_PASS)
-time.sleep(1)
+driver.find_element(By.XPATH, PASSWORD_XPATH).send_keys(SDAROT_PASS)
 login_button = driver.find_element(By.XPATH, LOGIN_BUTTON_XPATH)
 time.sleep(1)
 login_button.click()
-
+time.sleep(15)
 done = False
-
-while "ברוך שובך" not in driver.page_source:
-    print('waiting to ברוך שובך...')
-    time.sleep(10)
 
 while not done:
    time.sleep(36)
